@@ -1,0 +1,15 @@
+# Ядро
+numpy
+pandas
+scikit-learn
+pyyaml
+joblib
+
+# Модели — нужны только для соответствующих model.name
+lightgbm
+xgboost
+catboost
+
+# Для ноутбука с анализом
+matplotlib
+jupyter

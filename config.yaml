@@ -1,0 +1,29 @@
+#   python main.py train --set model.name=rf --set cv.n_splits=10
+
+seed: 42
+
+data:
+  train_path: data/raw/train.csv
+  test_path: data/raw/test.csv
+  target: Survived
+  id_column: PassengerId
+
+features:
+  engineering: true # добавлять признаки Titanic (Title, FamilySize, Deck, ...)
+  encoding: ordinal # ordinal — для деревьев, onehot — для линейных моделей
+  scale: false # масштабировать числовые признаки
+
+
+model:
+  name: lgbm
+  params:
+    n_estimators: 600
+    learning_rate: 0.05
+    num_leaves: 31
+
+cv:
+  n_splits: 5
+  shuffle: true
+
+threshold: 0.5
+output_dir: outputs
