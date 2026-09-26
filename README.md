@@ -22,6 +22,23 @@
 └── requirements.txt
 ```
 
+## Данные
+
+Датасет не хранится в репозитории. Скачайте его со страницы соревнования
+[Titanic — Machine Learning from Disaster](https://www.kaggle.com/competitions/titanic/data)
+и положите файлы в `data/raw/`:
+
+data/raw/
+├── train.csv
+└── test.csv
+
+Либо через Kaggle API (нужен токен в `~/.kaggle/kaggle.json`):
+
+```bash
+kaggle competitions download -c titanic -p data/raw
+unzip data/raw/titanic.zip -d data/raw
+```
+
 ## Запуск
 
 ```bash
@@ -62,6 +79,11 @@ python main.py predict --run-dir outputs/2026-09-16_12-00-00_lgbm
 Результаты сравнений записывайте в `RESULTS.md` — иначе через неделю не вспомнить,
 какая комбинация давала лучший скор.
 
+## Результаты
+
+Лучший результат: RandomForest, OOF accuracy 0.8339 ± 0.019, roc_auc 0.8845.
+Полная таблица экспериментов — в [RESULTS.md](RESULTS.md).
+
 ## Анализ данных
 
 ```bash
@@ -96,3 +118,5 @@ test сразу, без риска утечки.
 | новая модель | `src/models.py`, функция `build_model` |
 | новая метрика | `src/training.py`, функция `compute_metrics` |
 | другой датасет | `config.yaml` → `data`, и `features.engineering: false` |
+
+
