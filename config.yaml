@@ -1,4 +1,5 @@
 #   python main.py train --set model.name=rf --set cv.n_splits=10
+#   python main.py train --set model.params.rf.n_estimators=1000
 
 seed: 42
 
@@ -16,10 +17,15 @@ features:
 
 model:
   name: lgbm
+  # Параметры по имени модели: берутся только для выбранной,
+  # поэтому --set model.name=... не тащит чужие параметры.
   params:
-    n_estimators: 600
-    learning_rate: 0.05
-    num_leaves: 31
+    logreg: {}
+    rf: {n_estimators: 500, min_samples_leaf: 2}
+    histgb: {}
+    lgbm: {n_estimators: 600, learning_rate: 0.05, num_leaves: 31}
+    xgb: {}
+    catboost: {}
 
 cv:
   n_splits: 5

@@ -67,7 +67,7 @@ models/         обученные модели по каждому фолду
 ```bash
 python main.py train --set model.name=xgb
 python main.py train --set model.name=logreg --set features.encoding=onehot --set features.scale=true
-python main.py train --set cv.n_splits=10 --set 'model.params={n_estimators: 1000, learning_rate: 0.02}'
+python main.py train --set cv.n_splits=10 --set 'model.params.lgbm={n_estimators: 1000, learning_rate: 0.02}'
 python main.py predict                      # предсказать последним обученным запуском
 python main.py predict --run-dir outputs/2026-09-16_12-00-00_lgbm
 ```
@@ -75,6 +75,10 @@ python main.py predict --run-dir outputs/2026-09-16_12-00-00_lgbm
 Доступные модели: `logreg`, `rf`, `histgb` (только scikit-learn), `lgbm`, `xgb`, `catboost`.
 Линейным нужны `features.encoding=onehot` и `features.scale=true`, деревьям —
 `ordinal` без масштабирования (стоит по умолчанию).
+
+Параметры моделей лежат в конфиге по имени модели (`model.params.rf`,
+`model.params.lgbm`, ...), поэтому при `--set model.name=...` берутся только
+параметры выбранной модели.
 
 Результаты сравнений записывайте в `RESULTS.md` — иначе через неделю не вспомнить,
 какая комбинация давала лучший скор.

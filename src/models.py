@@ -4,7 +4,8 @@
 
 def build_model(cfg):
     name = cfg["model"]["name"]
-    params = dict(cfg["model"].get("params") or {})
+    # Параметры лежат по имени модели: model.params.<name>
+    params = dict((cfg["model"].get("params") or {}).get(name) or {})
     seed = cfg["seed"]
 
     if name == "logreg":
