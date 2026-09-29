@@ -38,6 +38,18 @@ def build_model(cfg):
 
         return CatBoostClassifier(verbose=0, allow_writing_files=False, random_seed=seed, **params)
 
+    if name == "nn":
+        # Нейросети нужны плотные числовые признаки одного масштаба:
+        # запускайте с features.encoding=onehot и features.scale=true.
+        try:
+            from src.nn import TorchMLPClassifier
+        except ImportError as exc:
+            raise ImportError(
+                "Для model.name=nn нужен PyTorch: pip install torch"
+            ) from exc
+
+        return TorchMLPClassifier(random_state=seed, **params)
+
     raise ValueError(
-        f"Неизвестная модель '{name}'. Доступные: logreg, rf, histgb, lgbm, xgb, catboost"
+        f"Неизвестная модель '{name}'. Доступные: logreg, rf, histgb, lgbm, xgb, catboost, nn"
     )

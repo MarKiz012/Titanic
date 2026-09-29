@@ -8,7 +8,15 @@ import joblib
 import numpy as np
 import pandas as pd
 from sklearn.base import clone
-from sklearn.metrics import accuracy_score, f1_score, log_loss, roc_auc_score
+from sklearn.metrics import (
+    accuracy_score,
+    average_precision_score,
+    f1_score,
+    log_loss,
+    precision_score,
+    recall_score,
+    roc_auc_score,
+)
 from sklearn.pipeline import Pipeline
 
 from src.data import load_data, make_folds
@@ -17,11 +25,25 @@ from src.models import build_model
 
 
 def compute_metrics(y_true, proba, threshold):
+    """Метрики качества на одном наборе предсказаний.
+
+    accuracy / precision / recall / f1 считаются от классов и зависят от
+    порога; roc_auc / pr_auc / log_loss — от вероятностей и от порога не зависят.
+
+    Бизнес-смысл пары precision–recall: precision отвечает на вопрос «сколько
+    из тех, кого мы назвали выжившими, действительно выжили» (цена ложной
+    тревоги), recall — «какую долю выживших мы нашли» (цена пропуска).
+    pr_auc (он же average precision) обобщает эту пару по всем порогам сразу
+    и на несбалансированных классах информативнее roc_auc.
+    """
     pred = (proba >= threshold).astype(int)
     return {
         "accuracy": accuracy_score(y_true, pred),
-        "roc_auc": roc_auc_score(y_true, proba),
+        "precision": precision_score(y_true, pred, zero_division=0),
+        "recall": recall_score(y_true, pred, zero_division=0),
         "f1": f1_score(y_true, pred, zero_division=0),
+        "roc_auc": roc_auc_score(y_true, proba),
+        "pr_auc": average_precision_score(y_true, proba),
         "log_loss": log_loss(y_true, proba),
     }
 

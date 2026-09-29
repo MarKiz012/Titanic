@@ -1,15 +1,19 @@
+# Версии зафиксированы, чтобы у всех получались одинаковые цифры.
+# Обновить под своё окружение: pip freeze > requirements.txt
+
 # Ядро
-numpy
-pandas
-scikit-learn
-pyyaml
-joblib
+numpy==2.5.3
+pandas==3.0.6
+scikit-learn==1.9.1
+pyyaml==6.0.3
+joblib==1.6.0
 
 # Модели — нужны только для соответствующих model.name
-lightgbm
-xgboost
-catboost
+lightgbm==4.7.0
+xgboost==3.4.1
+catboost==1.2.10
+torch==2.14.0
 
 # Для ноутбука с анализом
-matplotlib
-jupyter
+matplotlib==3.11.2
+jupyter==1.1.1

@@ -17,8 +17,7 @@ features:
 
 model:
   name: lgbm
-  # Параметры по имени модели: берутся только для выбранной,
-  # поэтому --set model.name=... не тащит чужие параметры.
+  # Параметры по имени модели: берутся только для выбранной
   params:
     logreg: {}
     rf: {n_estimators: 500, min_samples_leaf: 2}
@@ -26,6 +25,8 @@ model:
     lgbm: {n_estimators: 600, learning_rate: 0.05, num_leaves: 31}
     xgb: {}
     catboost: {}
+    # Нейросеть: запускать с features.encoding=onehot и features.scale=true
+    nn: {hidden_sizes: [64, 32], dropout: 0.2, lr: 0.001, epochs: 200, batch_size: 64}
 
 cv:
   n_splits: 5
