@@ -49,7 +49,6 @@ class TorchMLPClassifier(ClassifierMixin, BaseEstimator):
         self.random_state = random_state
         self.verbose = verbose
 
-    # ------------------------------------------------------------------ #
     def _build_module(self, n_features):
         layers = []
         in_size = n_features
